@@ -4,6 +4,8 @@
 
 -- Problem 1
 -- (*) Find the last element of a list.
+import Data.List
+
 last' :: [a] -> Maybe a 
 last' []  = Nothing
 last' [x] = Just x 
@@ -129,9 +131,17 @@ replN n = foldr (f n) []  where
 
 -- Problem 16
 -- (**) Drop every N'th element from a list.
-dropN :: Integer -> [a] -> [a]
-dropN n xs = foldr (\x ac -> f  x ac ) [] xs where
-  f = undefined
+dropN :: Eq a => Int -> [a] -> [a]
+dropN _ [] = []
+dropN 0 xs = xs
+dropN 1 _  = []
+dropN n xs 
+ | n > length xs = xs 
+ | otherwise = filter (\x -> f x == True) xs where 
+  f el = case elemIndex el xs of
+    Nothing -> False
+    Just ix -> rem ix n == 0
+
 
 
 
