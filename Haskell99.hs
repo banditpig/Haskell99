@@ -131,6 +131,7 @@ replN n = foldr (f n) []  where
 -- (**) Drop every N'th element from a list.
 dropN :: Integer -> [a] -> [a]
 dropN n xs = foldr (\x ac -> f  x ac ) [] xs where
+  f = undefined
 
 
 
