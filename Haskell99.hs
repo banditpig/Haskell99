@@ -10,6 +10,7 @@ last' :: [a] -> Maybe a
 last' []  = Nothing
 last' [x] = Just x 
 last' (_:xs) = last' xs 
+-- ---------------------------------------------------
 
 -- Problem 2
 -- (*) Find the last but one element of a list.
@@ -18,6 +19,7 @@ lastBut xs = case xs of
   []      -> Nothing
   [x,_]   -> Just x 
   (_:xs') -> lastBut xs'
+-- ---------------------------------------------------
 
 -- Problem 3
 -- (*) Find the K'th element of a list. 
@@ -30,17 +32,19 @@ elAt i xs
     elAt' ix iy (x:xs') 
       | ix == iy = x 
       | otherwise = elAt' ix (iy + 1) xs'
+-- ---------------------------------------------------
 
 -- Problem 4
 -- (*) Find the number of elements of a list.
 listLen :: [a] -> Integer
 listLen  = foldr (\_ ac -> ac + 1)  0
+-- ---------------------------------------------------
 
 -- Problem 5
 -- (*) Reverse a list.
 rev :: [a] -> [a]
 rev = foldr (\x ac -> ac ++ [x]) []
-
+-- ---------------------------------------------------
 -- Problem 6
 -- (*) Find out whether a list is a palindrome. 
 -- A palindrome can be read forward or backward;
@@ -49,6 +53,7 @@ isPalin :: Eq a => [a] -> Bool
 isPalin xs 
   | xs == rev xs = True
   | otherwise = False
+-- ---------------------------------------------------
 
 -- Problem 7
 -- (**) Flatten a nested list structure.
@@ -57,6 +62,7 @@ isPalin xs
 flatten :: [[a]] -> [a]
 flatten [] = []
 flatten xs = foldr (++) [] xs
+-- ---------------------------------------------------
 
 -- Problem 8
 -- (**) Eliminate consecutive duplicates of list elements.
@@ -66,6 +72,7 @@ flatten xs = foldr (++) [] xs
 removeDups :: Eq a =>  [a] -> [a]
 removeDups [] = []
 removeDups (x:xs) = x : removeDups ( dropWhile (==x)  xs)
+-- ---------------------------------------------------
 
 
 -- Problem 9
@@ -75,6 +82,7 @@ removeDups (x:xs) = x : removeDups ( dropWhile (==x)  xs)
 pack :: Eq a => [a] -> [[a]]
 pack [] = []
 pack (x:xs) = (x : takeWhile (== x) xs ) : pack ( dropWhile (==x)  xs)
+-- ---------------------------------------------------
  
 -- Problem 10
 -- (*) Run-length encoding of a list. Use the result of problem 
@@ -87,6 +95,7 @@ pack (x:xs) = (x : takeWhile (== x) xs ) : pack ( dropWhile (==x)  xs)
 encode :: Eq a => [a] -> [(Int, a)]
 encode = code . pack where 
     code = foldr (\vals@(x:_) ac -> (length vals, x):ac) []
+-- ---------------------------------------------------
 
 -- Problem 11
 -- (*) Modified run-length encoding.
@@ -106,6 +115,7 @@ encode' xs = foldr f [] (encode xs)
         f (x, y) ac
          | x == 1 = Single y : ac
          | otherwise = Multi x y : ac
+-- ---------------------------------------------------
 
 -- Problem 12 A
 decode :: Eq a => [(Int, a)] -> [a] 
@@ -113,14 +123,14 @@ decode [] = []
 decode xs = foldr f [] xs where
     f (0, _) lst = lst
     f (q, v) lst = v : f (q-1, v) lst
-
-
+-- ---------------------------------------------------
 -- Problem 14
 -- (*) Duplicate the elements of a list.
 -- Problem 22
 -- Create a list containing all integers within a given range.
 dupl :: [a] -> [a]
 dupl = foldr (\x ac -> x:x:ac) []
+-- ---------------------------------------------------
 
 -- Problem 15
 -- (**) Replicate the elements of a list a given number of times.
@@ -128,6 +138,7 @@ replN :: Integer -> [a] -> [a]
 replN n = foldr (f n) []  where
   f 0 _ xs' =  xs'
   f i x' xs' = f (i-1) x' (x':xs') 
+-- ---------------------------------------------------
 
 -- Problem 16
 -- (**) Drop every N'th element from a list.
@@ -141,9 +152,34 @@ dropN n xs
   f el = case elemIndex el xs of
     Nothing -> False
     Just ix -> rem ix n == 0
+-- ---------------------------------------------------
 
+-- Problem 17
+-- (*) Split a list into two parts; the length of the first part is given.
+-- Do not use any predefined predicates.
+splitTwo :: Eq a =>  Int -> [a] -> ([a], [a])
+splitTwo n xs = (takeN n xs, removeN n xs) 
 
+takeN :: Eq a => Int -> [a] -> [a]
+takeN 0 xs = []
+takeN _ [] = []
+takeN n xs 
+  | n >= length xs = xs
+  | otherwise = takeN' n n xs where
+    takeN' ix n (x:xs)
+      | ix == 0 = []
+      | otherwise = x: takeN' (ix - 1) n xs
 
+removeN :: Eq a => Int -> [a] -> [a]
+removeN 0 xs = xs
+removeN _ [] = []
+removeN n xs
+  | n >= length xs = []
+  | otherwise = removeN' n n xs where 
+    removeN' ix n lst@(x:xs)
+      | ix == 0 = lst
+      | otherwise = removeN' (ix - 1) n xs
+-- ---------------------------------------------------
 
 range :: Integer -> Integer -> [Integer] 
 range f l 
