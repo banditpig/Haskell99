@@ -194,17 +194,34 @@ removeN n xs
 -- Problem 18
 -- (**) Extract a slice from a list.
 -- Given two indices, i and k, the slice is the list containing the 
--- elements between the i'th and k'th element of 
--- the original list (both limits included). Start counting the elements with 1.
-
+-- elements between the i'th and j'th element of 
+-- the original list (both limits included).
 -- Example:
 -- slice ['a','b','c','d','e','f','g','h','i','k'] 3 7
 -- "cdefg"
 
 slice :: [a] -> Integer -> Integer -> [a]
-slice = undefined
+slice xs i j = buildSlice xs 0 i j where 
+  buildSlice [] _ _ _ = []
+  buildSlice (x:xs) ix i j 
+    | ix >= i && ix <= j = x : buildSlice xs (ix + 1) i j
+    | otherwise = buildSlice xs (ix + 1) i j
 
 -- ---------------------------------------------------
+-- Problem 19
+-- (**) Rotate a list N places to the left.
+
+-- Hint: Use the predefined functions length and (++).
+-- Examples
+
+-- rotate ['a','b','c','d','e','f','g','h'] 3
+-- "defghabc"
+-- rotate ['a','b','c','d','e','f','g','h'] (-2)
+-- "ghabcdef"
+rotate :: [a] -> Integer -> [a]
+rotate = undefined
+
+
 
 range :: Integer -> Integer -> [Integer] 
 range f l 
