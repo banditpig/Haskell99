@@ -160,6 +160,17 @@ dropN n xs
 splitTwo :: Eq a =>  Int -> [a] -> ([a], [a])
 splitTwo n xs = (takeN n xs, removeN n xs) 
 
+splitTwo' :: Eq a =>  Int -> [a] -> ([a], [a]) 
+splitTwo' n [] = ([], [])
+splitTwo' n lst@(x:xs)
+  | n > 0 = (x : ys, zs)
+  | otherwise = ([], lst) where
+     (ys, zs) = splitTwo' xs (n - 1)
+
+-- split l@(x : xs) n | n > 0     = (x : ys, zs)
+--                    | otherwise = ([], l)
+--     where (ys,zs) = split xs (n - 1)
+
 takeN :: Eq a => Int -> [a] -> [a]
 takeN 0 xs = []
 takeN _ [] = []
