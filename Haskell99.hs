@@ -165,7 +165,7 @@ splitTwo' n [] = ([], [])
 splitTwo' n lst@(x:xs)
   | n > 0 = (x : ys, zs)
   | otherwise = ([], lst) where
-     (ys, zs) = splitTwo' xs (n - 1)
+     (ys, zs) = splitTwo'  (n - 1) xs
 
 -- split l@(x : xs) n | n > 0     = (x : ys, zs)
 --                    | otherwise = ([], l)
@@ -190,6 +190,20 @@ removeN n xs
     removeN' ix n lst@(x:xs)
       | ix == 0 = lst
       | otherwise = removeN' (ix - 1) n xs
+-- ---------------------------------------------------
+-- Problem 18
+-- (**) Extract a slice from a list.
+-- Given two indices, i and k, the slice is the list containing the 
+-- elements between the i'th and k'th element of 
+-- the original list (both limits included). Start counting the elements with 1.
+
+-- Example:
+-- slice ['a','b','c','d','e','f','g','h','i','k'] 3 7
+-- "cdefg"
+
+slice :: [a] -> Integer -> Integer -> [a]
+slice = undefined
+
 -- ---------------------------------------------------
 
 range :: Integer -> Integer -> [Integer] 
