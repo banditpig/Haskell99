@@ -200,7 +200,7 @@ removeN n xs
 -- slice ['a','b','c','d','e','f','g','h','i','k'] 3 7
 -- "cdefg"
 
-slice :: [a] -> Integer -> Integer -> [a]
+slice :: [a] -> Int -> Int -> [a]
 slice xs i j = buildSlice xs 0 i j where 
   buildSlice [] _ _ _ = []
   buildSlice (x:xs) ix i j 
@@ -211,15 +211,15 @@ slice xs i j = buildSlice xs 0 i j where
 -- Problem 19
 -- (**) Rotate a list N places to the left.
 
--- Hint: Use the predefined functions length and (++).
--- Examples
-
 -- rotate ['a','b','c','d','e','f','g','h'] 3
 -- "defghabc"
 -- rotate ['a','b','c','d','e','f','g','h'] (-2)
 -- "ghabcdef"
-rotate :: [a] -> Integer -> [a]
-rotate = undefined
+rotate :: [a] -> Int -> [a]
+rotate xs i 
+  | i < 0 = rotate xs (length xs  - abs i) 
+  | otherwise = drop i xs ++ slice xs 0 (i - 1)
+-- ---------------------------------------------------
 
 
 
