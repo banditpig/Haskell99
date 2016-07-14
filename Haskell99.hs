@@ -126,8 +126,7 @@ decode xs = foldr f [] xs where
 -- ---------------------------------------------------
 -- Problem 14
 -- (*) Duplicate the elements of a list.
--- Problem 22
--- Create a list containing all integers within a given range.
+
 dupl :: [a] -> [a]
 dupl = foldr (\x ac -> x:x:ac) []
 -- ---------------------------------------------------
