@@ -237,6 +237,10 @@ insertAt :: a -> [a] -> Int -> [a]
 insertAt x xs i = slice xs 0 (i - 1) ++ x : slice xs i (length xs)
 
 -- ---------------------------------------------------
+-- Problem 22
+-- Create a list containing all integers within a given range.
+-- range 4 9
+-- [4,5,6,7,8,9]
 
 range :: Integer -> Integer -> [Integer] 
 range f l 
@@ -254,6 +258,7 @@ range'' :: Integer -> Integer -> [Integer]
 range'' f l
   | f > l = []
   | otherwise = foldr (:) [f] $ range'' (f+1) l
+-- ---------------------------------------------------
 
 
 
