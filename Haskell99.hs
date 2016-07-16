@@ -227,7 +227,16 @@ removeAt :: Int -> [a] -> (a, [a])
 removeAt i xs = (x, xs') where
   [x] = slice xs i i
   xs' = slice xs 0 (i - 1) ++ slice xs (i + 1) (length xs)
+-- ---------------------------------------------------
+-- Problem 21
+-- Insert an element at a given position into a list.
 
+-- insertAt 'X' "abcd" 2
+-- "abXcd"
+insertAt :: a -> [a] -> Int -> [a]
+insertAt x xs i = slice xs 0 (i - 1) ++ x : slice xs i (length xs)
+
+-- ---------------------------------------------------
 
 range :: Integer -> Integer -> [Integer] 
 range f l 
