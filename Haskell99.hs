@@ -176,9 +176,9 @@ takeN _ [] = []
 takeN n xs 
   | n >= length xs = xs
   | otherwise = takeN' n n xs where
-    takeN' ix n (x:xs)
+    takeN' ix n' (x':xs')
       | ix == 0 = []
-      | otherwise = x: takeN' (ix - 1) n xs
+      | otherwise = x' : takeN' (ix - 1) n' xs'
 
 removeN :: Eq a => Int -> [a] -> [a]
 removeN 0 xs = xs
@@ -186,9 +186,9 @@ removeN _ [] = []
 removeN n xs
   | n >= length xs = []
   | otherwise = removeN' n n xs where 
-    removeN' ix n lst@xs
+    removeN' ix n' lst@xs'
       | ix == 0 = lst
-      | otherwise = removeN' (ix - 1) n xs
+      | otherwise = removeN' (ix - 1) n' xs'
 -- ---------------------------------------------------
 -- Problem 18
 -- (**) Extract a slice from a list.
@@ -202,9 +202,9 @@ removeN n xs
 slice :: [a] -> Int -> Int -> [a]
 slice xs  = buildSlice xs 0  where 
   buildSlice [] _ _ _ = []
-  buildSlice (x:xs) ix i j 
-    | ix >= i && ix <= j = x : buildSlice xs (ix + 1) i j
-    | otherwise = buildSlice xs (ix + 1) i j
+  buildSlice (x':xs') ix i j 
+    | ix >= i && ix <= j = x' : buildSlice xs' (ix + 1) i j
+    | otherwise = buildSlice xs' (ix + 1) i j
 
 -- ---------------------------------------------------
 -- Problem 19
@@ -259,7 +259,23 @@ range'' f l
   | f > l = []
   | otherwise = foldr (:) [f] $ range'' (f+1) l
 -- ---------------------------------------------------
+--
+-- Problems 21 - 25 later 
+--
+-- ---------------------------------------------------
 
+-- Problem 26
+-- (**) Generate the combinations of K distinct objects chosen 
+-- from the N elements of a list
+-- In how many ways can a committee of 3 be chosen from a group of 12 people? 
+-- We all know that there are C(12,3) = 220 
+-- possibilities (C(N,K) denotes the well-known binomial coefficients).
+-- For pure mathematicians, this result may be great.
+-- But we want to really generate all the possibilities in a list.
+-- combs 3 "abcdef"
+-- ["abc","abd","abe",...]
+combs :: Int -> [a] -> [[a]]
+combs i xs = undefined
 
 
 
