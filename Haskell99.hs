@@ -147,7 +147,7 @@ dropN 0 xs = xs
 dropN 1 _  = []
 dropN n xs 
  | n > length xs = xs 
- | otherwise = filter (\x -> f x == True) xs where 
+ | otherwise = filter f xs where 
   f el = case elemIndex el xs of
     Nothing -> False
     Just ix -> rem ix n == 0
@@ -160,7 +160,7 @@ splitTwo :: Eq a =>  Int -> [a] -> ([a], [a])
 splitTwo n xs = (takeN n xs, removeN n xs) 
 
 splitTwo' :: Eq a =>  Int -> [a] -> ([a], [a]) 
-splitTwo' n [] = ([], [])
+splitTwo' _ [] = ([], [])
 splitTwo' n lst@(x:xs)
   | n > 0 = (x : ys, zs)
   | otherwise = ([], lst) where
@@ -171,7 +171,7 @@ splitTwo' n lst@(x:xs)
 --     where (ys,zs) = split xs (n - 1)
 
 takeN :: Eq a => Int -> [a] -> [a]
-takeN 0 xs = []
+takeN 0 _ = []
 takeN _ [] = []
 takeN n xs 
   | n >= length xs = xs
@@ -186,7 +186,7 @@ removeN _ [] = []
 removeN n xs
   | n >= length xs = []
   | otherwise = removeN' n n xs where 
-    removeN' ix n lst@(x:xs)
+    removeN' ix n lst@xs
       | ix == 0 = lst
       | otherwise = removeN' (ix - 1) n xs
 -- ---------------------------------------------------
@@ -200,7 +200,7 @@ removeN n xs
 -- "cdefg"
 
 slice :: [a] -> Int -> Int -> [a]
-slice xs i j = buildSlice xs 0 i j where 
+slice xs  = buildSlice xs 0  where 
   buildSlice [] _ _ _ = []
   buildSlice (x:xs) ix i j 
     | ix >= i && ix <= j = x : buildSlice xs (ix + 1) i j
@@ -219,7 +219,14 @@ rotate xs i
   | i < 0 = rotate xs (length xs  - abs i) 
   | otherwise = drop i xs ++ slice xs 0 (i - 1)
 -- ---------------------------------------------------
-
+-- Problem 20
+-- (*) Remove the K'th element from a list.
+-- removeAt 2 "abcd"
+-- ('c',"abd")
+removeAt :: Int -> [a] -> (a, [a])
+removeAt i xs = (x, xs') where
+  [x] = slice xs i i
+  xs' = slice xs 0 (i - 1) ++ slice xs (i + 1) (length xs)
 
 
 range :: Integer -> Integer -> [Integer] 
