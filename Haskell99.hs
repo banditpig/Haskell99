@@ -5,6 +5,7 @@
 -- Problem 1
 -- (*) Find the last element of a list.
 import Data.List
+import Data.Char
 
 last' :: [a] -> Maybe a 
 last' []  = Nothing
@@ -274,10 +275,26 @@ range'' f l
 -- But we want to really generate all the possibilities in a list.
 -- combs 3 "abcdef"
 -- ["abc","abd","abe",...]
-combs :: Int -> [a] -> [[a]]
-combs i xs = undefined
+combs :: Integer -> [a] -> [[a]]
+combs i (x:xs) =  foldr (\_ ac -> f x ac) []  [0..nck] 
+  where 
+    nck = nCk len i
+    len = toInteger (length xs)
+    f x ac = [x]:ac
+
+--listN :: Integer -> [a] -> [a]
+listN n xs  = [] 
+fac :: Integer -> Integer
+fac n = product [1..n]
+-- nCk = n! /  (k! (n-k)! )
+nCk n k  = fac n `div` (fac (n-k) * fac k)
 
 
-
-
+-- Not part of 99 Problems.
+-- Get the digits as a list of lists discarding any non-digits
+-- extractNumbers "a12a4" = ["12","4"]
+extractNumbers :: String -> [String]
+extractNumbers [] = []
+extractNumbers xs = nums : extractNumbers xs' where
+  (nums, xs') = span isDigit $ dropWhile ( not . isDigit ) xs
 
